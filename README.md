@@ -27,6 +27,37 @@ The [PX4 User Guide](https://docs.px4.io/master/en/) explains how to assemble [s
 See the [forum and chat](https://docs.px4.io/master/en/#support) if you need help!
 
 
+## Installation
+
+```bash
+cd
+git clone https://github.com/HuaYuXiao/PX4-Autopilot.git
+cd PX4-Autopilot/Tools/setup
+source ./ubuntu.sh
+cd ../..
+git submodule update --init --recursive
+pip3 install --user toml empy jinja2 packaging
+make px4_sitl_default gazebo
+```
+
+After compiling, the Gazebo interface will pop up. Close it.
+
+Modify `~/.bashrc`，add the following code. The first two sources cannot be reversed.
+
+```
+source ~/PX4-Autopilot/Tools/setup_gazebo.bash ~/PX4-Autopilot ~/PX4-Autopilot/build/px4_sitl_default
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot/Tools/sitl_gazebo
+```
+
+
+## Run
+
+```bash
+roslaunch px4 mavros_posix_sitl.launch
+```
+
+
 ## Changing code and contributing
 
 This [Developer Guide](https://docs.px4.io/master/en/development/development.html) is for software developers who want to modify the flight stack and middleware (e.g. to add new flight modes), hardware integrators who want to support new flight controller boards and peripherals, and anyone who wants to get PX4 working on a new (unsupported) airframe/vehicle.
@@ -80,6 +111,7 @@ The PX4 Dev Team syncs up on a [weekly dev call](https://dev.px4.io/master/en/co
 
 See also [maintainers list](https://px4.io/community/maintainers/) (px4.io) and the [contributors list](https://github.com/PX4/PX4-Autopilot/graphs/contributors) (Github).
 
+
 ## Supported Hardware
 
 This repository contains code supporting Pixhawk standard boards (best supported, best tested, recommended choice) and proprietary boards.
@@ -116,6 +148,7 @@ This repository contains code supporting Pixhawk standard boards (best supported
   * [Raspberry PI with Navio 2](https://docs.px4.io/master/en/flight_controller/raspberry_pi_navio2.html)
 
 Additional information about supported hardware can be found in [PX4 user Guide > Autopilot Hardware](https://docs.px4.io/master/en/flight_controller/).
+
 
 ## Project Roadmap
 
